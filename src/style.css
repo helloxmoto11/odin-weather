@@ -14,4 +14,27 @@ html, body {
 .root {
     height: 100vh;
     background-color: #76cafd;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+
+.side-bar {
+    border: 1px solid black;
+}
+
+.main-content {
+    display: grid;
+    grid-template-rows: 2fr 1fr 3fr;
+}
+
+.weather-details {
+
+}
+
+.weather-icon {
+    height: 150px;
+}
+
+.card {
+    border: 1px solid black;
 }
