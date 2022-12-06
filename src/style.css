@@ -6,7 +6,7 @@
 /*    font-style: normal;*/
 /*}*/
 
-html, body {
+*, html, body {
     margin: 0;
     padding: 0;
 }
@@ -28,11 +28,27 @@ html, body {
 }
 
 .weather-details {
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr;
+}
 
+.forecast {
+    padding: 1rem;
+}
+
+.icon-temp-container {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    font-size: 6rem;
+    gap: 2rem;
 }
 
 .weather-icon {
     height: 150px;
+}
+
+.current-temp {
+    align-self: center;
 }
 
 .card {

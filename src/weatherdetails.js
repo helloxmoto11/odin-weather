@@ -1,42 +1,37 @@
 import SunIcon from './sun-icon.png';
-import CloudIcon from './cloud.png';
-import MostlyCloudy from './mostlycloudy.png';
-import PartlyCloudy from './partly-cloudy.png';
 
 const WeatherDetails = () => {
     const weatherDetails = document.createElement('div');
     weatherDetails.classList.add('weather-details');
 
-    const header = document.createElement('div');
-    header.classList.add('header');
+    const forecast = document.createElement('div');
+    forecast.classList.add('forecast');
+
+    const search = document.createElement('div');
+    search.classList.add('search');
+
+    const recent = document.createElement('div');
+    recent.classList.add('recent')
 
 
     //weather icons
-
     const weatherIcon = new Image();
     weatherIcon.classList.add('weather-icon');
     weatherIcon.src = SunIcon;
 
-    const weatherIcon2 = new Image();
-    weatherIcon2.classList.add('weather-icon');
-    weatherIcon2.src = CloudIcon;
+    const currentTemperature = document.createElement("p");
+    currentTemperature.classList.add('current-temp');
+    currentTemperature.innerText = '77';
 
-    const weatherIcon3 = new Image();
-    weatherIcon3.classList.add('weather-icon');
-    weatherIcon3.src = MostlyCloudy;
-
-    const weatherIcon4 = new Image();
-    weatherIcon3.classList.add('weather-icon');
-    weatherIcon3.src = PartlyCloudy;
+    const iconTempContainer = document.createElement('div');
+    iconTempContainer.classList.add('icon-temp-container');
+    iconTempContainer.appendChild(weatherIcon);
+    iconTempContainer.appendChild(currentTemperature);
 
 
-    header.appendChild(weatherIcon);
-    header.appendChild(weatherIcon2);
-    header.appendChild(weatherIcon3);
-    header.appendChild(weatherIcon4);
-
-
-
+    const city = document.createElement("p");
+    city.classList.add('city');
+    city.innerText = "Denton, Tx";
     const highLow = document.createElement('p');
     highLow.classList.add('sub-header')
     highLow.innerText = 'High 74 / Low 65';
@@ -44,9 +39,18 @@ const WeatherDetails = () => {
     time.classList.add('sub-header')
     time.innerText = 'Tue, 1:45 PM';
 
-    weatherDetails.appendChild(header);
-    weatherDetails.appendChild(highLow);
-    weatherDetails.appendChild(time);
+
+    forecast.appendChild(iconTempContainer);
+    forecast.appendChild(city);
+    forecast.appendChild(highLow);
+    forecast.appendChild(time);
+
+
+
+
+    weatherDetails.appendChild(forecast);
+    weatherDetails.appendChild(search);
+    weatherDetails.appendChild(recent);
 
 
     return weatherDetails;
