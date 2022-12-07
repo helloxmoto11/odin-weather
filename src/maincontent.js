@@ -1,5 +1,6 @@
 import WeatherDetails from "./weatherdetails";
-import SevenDayForecast from "./sevendayforecast";
+import FiveDayForecast from "./fivedayforecast";
+import HourlyWeatherContent from "./hourlyweather";
 
 
 function MainContent() {
@@ -7,7 +8,8 @@ function MainContent() {
     mainContent.classList.add('main-content');
 
     mainContent.appendChild(WeatherDetails());
-    mainContent.appendChild(SevenDayForecast());
+    mainContent.appendChild(HourlyWeatherContent());
+    mainContent.appendChild(FiveDayForecast());
 
 
 

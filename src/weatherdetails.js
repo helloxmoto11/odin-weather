@@ -1,4 +1,4 @@
-import SunIcon from './sun-icon.png';
+import SunIcon from './assets/sun-icon.png';
 import Card from "./card";
 
 
