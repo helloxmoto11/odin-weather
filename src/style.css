@@ -34,7 +34,7 @@ html, body {
     height: 100vh   ;
     padding: 1rem;
     display: grid;
-    grid-template-rows: 2fr 1fr 3fr;
+    grid-template-rows: 2fr 200px 2fr;
 }
 
 .weather-details {
@@ -96,4 +96,13 @@ html, body {
 
 .recent {
     padding: 1rem;
+}
+
+.seven-day-forecast {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1rem;
+    grid-row: 3 / 4;
+
 }
