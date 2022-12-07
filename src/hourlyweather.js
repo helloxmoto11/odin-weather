@@ -6,7 +6,7 @@ const HourlyWeatherContent = () => {
 
     const title = document.createElement('p');
     title.classList.add('title');
-    title.innerText = 'Hourly';
+    title.innerText = 'Hourly Forecast';
 
     container.appendChild(title);
 

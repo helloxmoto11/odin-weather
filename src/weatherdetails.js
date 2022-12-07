@@ -68,6 +68,7 @@ function searchContent() {
     searchButton.innerText = 'Get Weather';
 
     const card = Card();
+    card.classList.add('search-card');
     card.appendChild(searchLabel);
     card.appendChild(searchInput);
     card.appendChild(searchButton);

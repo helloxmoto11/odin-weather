@@ -11,7 +11,7 @@ const FiveDayForecast = () => {
     title.classList.add('title');
     sevenDayForecast.appendChild(title);
 
-    const arr = Object.entries(fiveDayWeather).map(entry => {
+    Object.entries(fiveDayWeather).map(entry => {
         console.log(entry)
         const day = entry[0];
         const temp = entry[1].temperature;
