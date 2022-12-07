@@ -1,5 +1,4 @@
 import WeatherDetails from "./weatherdetails";
-import Card from "./card";
 
 
 function MainContent() {
@@ -8,8 +7,7 @@ function MainContent() {
 
     mainContent.appendChild(WeatherDetails());
 
-    mainContent.appendChild(Card());
-    mainContent.appendChild(Card());
+
 
 
 

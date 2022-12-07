@@ -43,14 +43,50 @@
     gap: 2rem;
 }
 
-.weather-icon {
+.weather-icon-large {
     height: 150px;
+}
+
+.weather-icon-medium {
+    height: 100px;
+}
+
+.weather-icon-small {
+    height: 50px;
 }
 
 .current-temp {
     align-self: center;
 }
 
+.search {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .card {
-    border: 1px solid black;
+    padding: 1rem;
+    border-radius: 20px;
+    background-color: #92d2fa;
+    box-shadow: 0 4px 5px 0 #52aae1;
+    display: flex;
+    gap: .5rem;
+}
+
+.recent-card , .forecast-card {
+    height: 100%;
+}
+
+.forecast-card {
+    flex-direction: column;
+}
+
+.card input {
+    flex: 1;
+}
+
+.recent {
+    padding: 1rem;
 }
