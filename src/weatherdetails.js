@@ -23,7 +23,7 @@ const weather = () => {
     weatherIcon.src = SunIcon;
 
 
-    const currentTemperature = document.createElement("p");
+    const currentTemperature = document.createElement("div");
     currentTemperature.classList.add('current-temp');
 
 

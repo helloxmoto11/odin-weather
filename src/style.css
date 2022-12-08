@@ -89,6 +89,8 @@ html, body {
 
 .current-temp {
     align-self: center;
+    justify-self: center;
+    width: 145px;
 }
 
 .search {
