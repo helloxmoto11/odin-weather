@@ -27,9 +27,29 @@ html, body {
 }
 
 .side-bar {
+    padding: 1rem;
     border: 1px solid black;
     grid-column: 1 / 2;
     height: 100vh;
+}
+
+.sidebar-header {
+    font-size: 2rem;
+}
+
+.side-bar li {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+
+.icon-holder {
+    height: 24px;
+}
+
+#map-icon {
+    fill: white;
 }
 
 .main-content {
