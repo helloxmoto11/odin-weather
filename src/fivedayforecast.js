@@ -34,7 +34,6 @@ const FiveDayForecast = () => {
 
     })
 
-    console.log(fiveDayWeather);
 
 
     return sevenDayForecast;

@@ -48,7 +48,6 @@ const weather = () => {
 
     getCurrentWeather('Dallas')
         .then(currentWx => {
-            console.log(currentWx)
             currentTemperature.innerText = `${currentWx.currentTemp}°`;
             city.innerText = `${currentWx.city}, ${currentWx.state}`;
             highLow.innerText = `High ${currentWx.high}° / Low ${currentWx.low}°`;

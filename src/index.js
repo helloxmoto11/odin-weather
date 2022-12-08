@@ -1,6 +1,7 @@
 import "./style.css";
 import Sidebar from "./sidebar";
 import MainContent from "./maincontent";
+import {getFiveDayForecast} from "./data/api";
 
 
 const mainContent = () => {
@@ -10,6 +11,8 @@ const mainContent = () => {
     root.appendChild(Sidebar);
     root.appendChild(MainContent);
 
+
+     getFiveDayForecast('Dallas')
 
 
 
