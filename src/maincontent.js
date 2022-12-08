@@ -7,6 +7,9 @@ function MainContent() {
     const mainContent = document.createElement('div');
     mainContent.classList.add('main-content');
 
+
+
+
     mainContent.appendChild(WeatherDetails());
     mainContent.appendChild(HourlyWeatherContent());
     mainContent.appendChild(FiveDayForecast());

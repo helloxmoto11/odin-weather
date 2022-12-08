@@ -1,7 +1,7 @@
 import "./style.css";
 import Sidebar from "./sidebar";
 import MainContent from "./maincontent";
-import { getCurrentWeather } from "./data/api";
+
 
 const mainContent = () => {
     const root = document.createElement('div');
@@ -10,7 +10,6 @@ const mainContent = () => {
     root.appendChild(Sidebar);
     root.appendChild(MainContent);
 
-    getCurrentWeather('Dallas')
 
 
 

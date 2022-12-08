@@ -1,5 +1,6 @@
 import SunIcon from './assets/sun-icon.png';
 import Card from "./card";
+import {getCurrentWeather} from "./data/api";
 
 
 const WeatherDetails = () => {
@@ -21,9 +22,10 @@ const weather = () => {
     weatherIcon.classList.add('weather-icon-large');
     weatherIcon.src = SunIcon;
 
+
     const currentTemperature = document.createElement("p");
     currentTemperature.classList.add('current-temp');
-    currentTemperature.innerText = '77';
+
 
     const iconTempContainer = document.createElement('div');
     iconTempContainer.classList.add('icon-temp-container');
@@ -33,16 +35,25 @@ const weather = () => {
 
     const city = document.createElement("p");
     city.classList.add('city');
-    city.innerText = "Denton, Tx";
+
     const highLow = document.createElement('p');
     highLow.classList.add('sub-header')
-    highLow.innerText = 'High 74 / Low 65';
+
     const time = document.createElement('p');
     time.classList.add('sub-header')
-    time.innerText = 'Tue, 1:45 PM';
+
 
     const card = Card();
     card.classList.add('forecast-card');
+
+    getCurrentWeather('Dallas')
+        .then(currentWx => {
+            console.log(currentWx)
+            currentTemperature.innerText = `${currentWx.currentTemp}°`;
+            city.innerText = `${currentWx.city}, ${currentWx.state}`;
+            highLow.innerText = `High ${currentWx.high}° / Low ${currentWx.low}°`;
+            time.innerText = `${currentWx.currentTime}`;
+        })
 
     card.appendChild(iconTempContainer);
     card.appendChild(city);

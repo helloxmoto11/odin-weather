@@ -4,7 +4,8 @@ const API_KEY = '88854f138fea3af78357167acc7448ed'
 
 const getCurrentWeather = async (cityName) => {
     function convertKtoF(tempK) {
-        return 1.8 * (tempK - 273) + 32;
+        const temp =  (1.8 * (tempK - 273) + 32).toString();
+        return temp.substring(0, temp.indexOf('.'))
     }
 
     function convertDayOfWeek(day) {
@@ -27,6 +28,9 @@ const getCurrentWeather = async (cityName) => {
     }
 
     const coordinates = await getCoordinates(cityName);
+    const state = coordinates[0].state
+    const city = coordinates[0].name
+    console.log(`${city} ${state}`)
     const lat = coordinates[0].lat;
     const lon = coordinates[0].lon;
 
@@ -37,7 +41,7 @@ const getCurrentWeather = async (cityName) => {
 
     const response = await fetch(endPoint);
     const wx = await response.json();
-    const tempF = convertKtoF(wx.main.temp);
+    const tempF = convertKtoF(wx.main.temp).toString();
     const highTemp = convertKtoF(wx.main.temp_max);
     const lowTemp = convertKtoF(wx.main.temp_min);
 
@@ -54,18 +58,18 @@ const getCurrentWeather = async (cityName) => {
         hour12: true
     })}`;
 
-    console.log(`The Time Weather Received: ${timeWeatherReceived}`)
-    console.log(`The current time is: ${currentTime}`)
+    const currentWeather = {
+        "city": city,
+        "state": state,
+        "currentTemp": tempF,
+        "high": highTemp,
+        "low": lowTemp,
+        "currentTime": currentTime,
+        "dt": timeWeatherReceived
 
+    }
 
-    console.log(`the current temperature is ${tempF}`);
-    console.log(`todays high is ${highTemp}`)
-    console.log(`todays low is ${lowTemp}`)
-
-
-    console.log(wx) //logs temp in kelvin
-
-
+    return currentWeather;
 }
 
 const getFiveDayForecast = () => {
