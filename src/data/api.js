@@ -1,14 +1,15 @@
+import {API_KEY} from "./apikey.js";
+
 const BASEURL = 'https://api.openweathermap.org/';
-const API_KEY = '88854f138fea3af78357167acc7448ed'
 
 
 const getCurrentWeather = async (cityName) => {
 
     const coordinates = await getCoordinates(cityName);
-    const state = coordinates[0].state
-    const city = coordinates[0].name
-    const lat = coordinates[0].lat;
-    const lon = coordinates[0].lon;
+    const state = coordinates.state
+    const city = coordinates.name
+    const lat = coordinates.lat;
+    const lon = coordinates.lon;
 
     const endPoint = `${BASEURL}data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
@@ -89,10 +90,10 @@ const getCoordinates = async (cityName) => {
 
     const endPoint = `${BASEURL}geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
     const response = await fetch(endPoint)
-    const json = response.json();
+    const json = await response.json();
 
 
-    return json;
+    return json[0];
 }
 
 function convertKtoF(tempK) {
