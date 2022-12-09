@@ -2,11 +2,11 @@ import SunIcon from './assets/sun-icon.png';
 import Card from "./card";
 
 
-const WeatherDetails = (city, state, currentWeather) => {
+const WeatherDetails = (city, state, currentWeather, onSearch) => {
     const weatherDetails = document.createElement('div');
     weatherDetails.classList.add('weather-details');
     weatherDetails.appendChild(weather(city, state, currentWeather));
-    weatherDetails.appendChild(searchContent());
+    weatherDetails.appendChild(searchContent(onSearch));
     weatherDetails.appendChild(recentContent());
 
     return weatherDetails;
@@ -60,12 +60,13 @@ const weather = (city, state, currentWeather) => {
     return forecast;
 }
 
-function searchContent() {
+function searchContent(onSearch) {
     const searchContent = document.createElement('div');
     searchContent.classList.add('search');
 
     const searchLabel = document.createElement("label");
     const searchInput = document.createElement("input");
+    searchInput.type = 'search'
     const search = 'search';
     searchInput.id = search;
     searchLabel.htmlFor = search;
@@ -74,6 +75,9 @@ function searchContent() {
 
     const searchButton = document.createElement("button");
     searchButton.innerText = 'Get Weather';
+    searchButton.addEventListener('click', () => {
+        onSearch(searchInput.value);
+    })
 
     const card = Card();
     card.classList.add('search-card');
