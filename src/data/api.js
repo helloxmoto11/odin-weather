@@ -2,10 +2,11 @@ import {API_KEY} from "./apikey.js";
 
 const BASEURL = 'https://api.openweathermap.org/';
 
-
 const getCurrentWeather = async (cityName) => {
 
+
     const coordinates = await getCoordinates(cityName);
+    console.log({"coordinates": coordinates})
     const state = coordinates.state
     const city = coordinates.name
     const lat = coordinates.lat;
@@ -15,52 +16,49 @@ const getCurrentWeather = async (cityName) => {
 
     const response = await fetch(endPoint);
     const wx = await response.json();
+
     const tempF = convertKtoF(wx.main.temp).toString();
     const highTemp = convertKtoF(wx.main.temp_max);
     const lowTemp = convertKtoF(wx.main.temp_min);
 
-    const timeStamp = wx.dt;
-    const date = new Date(timeStamp * 1000);
-    const timeWeatherReceived = `${convertDayOfWeek(date.getDay())}, ${date.toLocaleTimeString('en-US', {
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true
-    })}`;
-    //fix this logic to match 5 day forecast
-    const currentTime = `${convertDayOfWeek(date.getDay())}, ${new Date().toLocaleTimeString('en-US', {
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true
-    })}`;
+    const date = new Date();
 
-    const currentWeather = {
+    const currentTime =
+        `${date.toLocaleDateString('en-US', {
+            weekday: "long"
+        })},
+         ${new Date().toLocaleTimeString('en-US', {
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true
+        })}`;
+
+    return {
         "city": city,
         "state": state,
         "currentTemp": tempF,
         "high": highTemp,
         "low": lowTemp,
         "currentTime": currentTime,
-        "dt": timeWeatherReceived
-
-    }
-
-    return currentWeather;
+    };
 }
 
-const getFiveDayForecast = async (cityName) => {
+const getForecast = async (cityName) => {
     const coordinates = await getCoordinates(cityName);
 
-    const lat = coordinates[0].lat;
-    const lon = coordinates[0].lon;
+    const lat = coordinates.lat;
+    const lon = coordinates.lon;
 
     const endPoint = `${BASEURL}data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
     const response = await fetch(endPoint)
     const json = await response.json();
-    console.log(json)
 
     const hourlyForecast = [];
-    const fiveDayForecast = [];
+    const fiveDayForecast = new Map();
+
+    const today = new Date().toLocaleDateString('en-US', {weekday: "long"})
+    console.log(today)
 
     //Todo implement sorted set here....
     for (let i = 0; i < json.list.length; i++) {
@@ -75,15 +73,32 @@ const getFiveDayForecast = async (cityName) => {
             hour12: true
         })
 
+        //Add first seven forecasts' to hourlyForecast.
         if (i < 7) {
             hourlyForecast.push({time: hour, temp: temp})
         }
-        fiveDayForecast.push({day: weekDay, temp: temp})
+
+        //if forecast is today skip to tomorrow.
+        if (weekDay === today) continue;
+
+        //Add the greatest temp to map.
+        if (!fiveDayForecast.has(weekDay)) {
+            fiveDayForecast.set(weekDay, temp);
+            continue;
+        }
+        if (temp > fiveDayForecast.get(weekDay)) {
+            fiveDayForecast.set(weekDay,temp)
+        }
     }
 
-    console.log(hourlyForecast);
-    console.log(fiveDayForecast);
+    const forecast = {
+        hourly: hourlyForecast,
+        fiveDay: Array.from(fiveDayForecast)
+    }
 
+    console.log({"Forecast": forecast});
+
+    return forecast;
 }
 
 const getCoordinates = async (cityName) => {
@@ -97,27 +112,8 @@ const getCoordinates = async (cityName) => {
 }
 
 function convertKtoF(tempK) {
-    const temp =  (1.8 * (tempK - 273) + 32).toString();
+    const temp = (1.8 * (tempK - 273) + 32).toString();
     return temp.substring(0, temp.indexOf('.'))
 }
 
-function convertDayOfWeek(day) {
-    switch (day) {
-        case 0:
-            return 'Sun';
-        case 1:
-            return 'Mon';
-        case 2:
-            return 'Tue';
-        case 3:
-            return 'Wed';
-        case 4:
-            return 'Thu';
-        case 5:
-            return 'Fri';
-        case 6:
-            return 'Sat';
-    }
-}
-
-export {getCurrentWeather, getFiveDayForecast};
+export {getCurrentWeather, getForecast};

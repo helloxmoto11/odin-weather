@@ -12,7 +12,6 @@ const FiveDayForecast = () => {
     sevenDayForecast.appendChild(title);
 
     Object.entries(fiveDayWeather).map(entry => {
-        console.log(entry)
         const day = entry[0];
         const temp = entry[1].temperature;
 
