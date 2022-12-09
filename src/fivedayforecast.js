@@ -1,19 +1,16 @@
 import Card from "./card";
-import fiveDayWeather from './data/sevendayweatherdata.js';
 
 
-const FiveDayForecast = () => {
-    const sevenDayForecast = document.createElement("div");
-    sevenDayForecast.classList.add('five-day-forecast');
+const FiveDayForecast = (forecast) => {
+    const fiveDayForecast = document.createElement("div");
+    fiveDayForecast.classList.add('five-day-forecast');
 
     const title = document.createElement('p');
     title.innerText = '5 Day Forecast';
     title.classList.add('title');
-    sevenDayForecast.appendChild(title);
+    fiveDayForecast.appendChild(title);
 
-    Object.entries(fiveDayWeather).map(entry => {
-        const day = entry[0];
-        const temp = entry[1].temperature;
+    forecast.forEach((temp, day) => {
 
         const card = Card();
         const weatherDiv = document.createElement('div');
@@ -29,13 +26,11 @@ const FiveDayForecast = () => {
         card.appendChild(tempP);
         weatherDiv.appendChild(card);
 
-        sevenDayForecast.appendChild(weatherDiv);
+        fiveDayForecast.appendChild(weatherDiv);
 
     })
 
-
-
-    return sevenDayForecast;
+    return fiveDayForecast;
 }
 
 

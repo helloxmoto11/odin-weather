@@ -1,6 +1,6 @@
 import Sunny from './assets/sun-icon.png';
 
-const HourlyWeatherContent = () => {
+const HourlyWeatherContent = (hourlyForecast) => {
     const container = document.createElement('div');
     container.classList.add('hourly-weather-container');
 
@@ -10,29 +10,22 @@ const HourlyWeatherContent = () => {
 
     container.appendChild(title);
 
-    //For testing purposes.
-    for (let i = 0; i < 7; i++) {
-        const wx = hourlyWeather();
+    hourlyForecast.forEach(fc => {
+        const wx = hourlyWeather(fc);
         container.appendChild(wx);
-
-
-    }
-
+    })
 
     return container;
 }
 
-const hourlyWeather = () => {
+const hourlyWeather = (forecast) => {
     const weatherDiv = document.createElement('div');
     weatherDiv.classList.add('weather-div');
 
-    const hour = '3 PM';
-    const temp = '78';
-
     const hourP = document.createElement('p');
     const tempP = document.createElement('p');
-    hourP.innerText = hour;
-    tempP.innerHTML = temp + '&#176'    ;
+    hourP.innerText = forecast.time;
+    tempP.innerHTML = forecast.temp + '&#176'    ;
     weatherDiv.appendChild(hourP);
     weatherDiv.appendChild(tempP);
 

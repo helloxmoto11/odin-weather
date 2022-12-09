@@ -1,20 +1,17 @@
 import "./style.css";
 import Sidebar from "./sidebar";
 import MainContent from "./maincontent";
-import {getForecast} from "./data/api";
+import {getWeather} from "./data/api";
 
 
 const mainContent = () => {
     const root = document.createElement('div');
     root.classList.add('root');
 
-    root.appendChild(Sidebar);
-    root.appendChild(MainContent);
-
-
-     getForecast('Dallas')
-
-
+    getWeather('Sacramento').then(wx => {
+        root.appendChild(Sidebar);
+        root.appendChild(MainContent(wx));
+    });
 
     return root;
 }

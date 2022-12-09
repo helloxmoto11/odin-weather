@@ -1,19 +1,18 @@
 import SunIcon from './assets/sun-icon.png';
 import Card from "./card";
-import {getCurrentWeather} from "./data/api";
 
 
-const WeatherDetails = () => {
+const WeatherDetails = (city, state, currentWeather) => {
     const weatherDetails = document.createElement('div');
     weatherDetails.classList.add('weather-details');
-    weatherDetails.appendChild(weather());
+    weatherDetails.appendChild(weather(city, state, currentWeather));
     weatherDetails.appendChild(searchContent());
     weatherDetails.appendChild(recentContent());
 
     return weatherDetails;
 }
 
-const weather = () => {
+const weather = (city, state, currentWeather) => {
     const forecast = document.createElement('div');
     forecast.classList.add('forecast');
 
@@ -33,8 +32,8 @@ const weather = () => {
     iconTempContainer.appendChild(currentTemperature);
 
 
-    const city = document.createElement("p");
-    city.classList.add('city');
+    const cityElement = document.createElement("p");
+    cityElement.classList.add('city');
 
     const highLow = document.createElement('p');
     highLow.classList.add('sub-header')
@@ -46,16 +45,15 @@ const weather = () => {
     const card = Card();
     card.classList.add('forecast-card');
 
-    getCurrentWeather('Dallas')
-        .then(currentWx => {
-            currentTemperature.innerText = `${currentWx.currentTemp}°`;
-            city.innerText = `${currentWx.city}, ${currentWx.state}`;
-            highLow.innerText = `High ${currentWx.high}° / Low ${currentWx.low}°`;
-            time.innerText = `${currentWx.currentTime}`;
-        })
+
+            currentTemperature.innerText = `${currentWeather.currentTemp}°`;
+            cityElement.innerText = `${city}, ${state}`;
+            highLow.innerText = `High ${currentWeather.high}° / Low ${currentWeather.low}°`;
+            time.innerText = `${currentWeather.currentTime}`;
+
 
     card.appendChild(iconTempContainer);
-    card.appendChild(city);
+    card.appendChild(cityElement);
     card.appendChild(highLow);
     card.appendChild(time);
     forecast.appendChild(card);

@@ -2,15 +2,29 @@ import {API_KEY} from "./apikey.js";
 
 const BASEURL = 'https://api.openweathermap.org/';
 
-const getCurrentWeather = async (cityName) => {
-
-
+const getWeather = async (cityName) => {
     const coordinates = await getCoordinates(cityName);
     console.log({"coordinates": coordinates})
     const state = coordinates.state
     const city = coordinates.name
     const lat = coordinates.lat;
     const lon = coordinates.lon;
+
+    const currentWeather = await getCurrentWeather(lat, lon);
+    const forecast = await getForecast(lat, lon);
+
+    const weather = {
+        "city": city,
+        "state": state,
+        "currentWeather": currentWeather,
+        "forecast": forecast
+    }
+
+    return weather;
+
+}
+
+const getCurrentWeather = async (lat, lon) => {
 
     const endPoint = `${BASEURL}data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
@@ -34,8 +48,6 @@ const getCurrentWeather = async (cityName) => {
         })}`;
 
     return {
-        "city": city,
-        "state": state,
         "currentTemp": tempF,
         "high": highTemp,
         "low": lowTemp,
@@ -43,11 +55,7 @@ const getCurrentWeather = async (cityName) => {
     };
 }
 
-const getForecast = async (cityName) => {
-    const coordinates = await getCoordinates(cityName);
-
-    const lat = coordinates.lat;
-    const lon = coordinates.lon;
+const getForecast = async (lat, lon) => {
 
     const endPoint = `${BASEURL}data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
@@ -60,7 +68,6 @@ const getForecast = async (cityName) => {
     const today = new Date().toLocaleDateString('en-US', {weekday: "long"})
     console.log(today)
 
-    //Todo implement sorted set here....
     for (let i = 0; i < json.list.length; i++) {
         const item = json.list[i]
         const time = new Date(item.dt * 1000)
@@ -87,16 +94,15 @@ const getForecast = async (cityName) => {
             continue;
         }
         if (temp > fiveDayForecast.get(weekDay)) {
-            fiveDayForecast.set(weekDay,temp)
+            fiveDayForecast.set(weekDay, temp)
         }
     }
 
     const forecast = {
-        hourly: hourlyForecast,
-        fiveDay: Array.from(fiveDayForecast)
+        "hourly": hourlyForecast,
+        "fiveDay": fiveDayForecast
     }
 
-    console.log({"Forecast": forecast});
 
     return forecast;
 }
@@ -116,4 +122,4 @@ function convertKtoF(tempK) {
     return temp.substring(0, temp.indexOf('.'))
 }
 
-export {getCurrentWeather, getForecast};
+export {getWeather};
